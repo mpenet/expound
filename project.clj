@@ -104,20 +104,18 @@
                                                      :target-path]}
              :kaocha [:test-common
                       {:dependencies [[lambdaisland/kaocha "0.0-418"]]}]
-             :test-common {:dependencies [
-                                          ;; [org.clojure/test.check "0.10.0-alpha3"]
-                                          ;; [com.gfredericks/test.chuck "0.2.9"]
-                                          ;; [orchestra "2019.02.06-1"]
-                                          ;; [io.aviso/pretty "0.1.37"]
-                                          ;; [org.clojure/core.specs.alpha "0.2.36"]
-                                          ;; [com.stuartsierra/dependency "0.2.0"]
-                                          ;; [ring/ring-core "1.6.3"] ; required to make ring-spec work, may cause issues with figwheel?
-                                          ;; [ring/ring-spec "0.0.4"] ; to test specs
-                                          ;; [org.onyxplatform/onyx-spec "0.13.0.0"] ; to test specs
-                                          ;; [vvvvalvalval/scope-capture "0.3.1"]
-                                           [metosin/spec-tools "0.7.1"]
-                                          [com.bhauman/spell-spec "0.1.1"]
-                                          ]
+             :test-common {:dependencies [[org.clojure/test.check "0.10.0-alpha3"]
+                                          [com.gfredericks/test.chuck "0.2.9"]
+                                          [orchestra "2019.02.06-1"]
+                                          [io.aviso/pretty "0.1.37"]
+                                          [org.clojure/core.specs.alpha "0.2.36"]
+                                          [com.stuartsierra/dependency "0.2.0"]
+                                          [ring/ring-core "1.6.3"] ; required to make ring-spec work, may cause issues with figwheel?
+                                          [ring/ring-spec "0.0.4"] ; to test specs
+                                          [org.onyxplatform/onyx-spec "0.13.0.0"] ; to test specs
+                                          [vvvvalvalval/scope-capture "0.3.1"]
+                                          [metosin/spec-tools "0.7.1"]
+                                          [com.bhauman/spell-spec "0.1.1"]]
                            :middleware [io.aviso.lein-pretty/inject]}
              :test-web [:test-common
                         {:source-paths ["test"]

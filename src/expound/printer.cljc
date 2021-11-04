@@ -6,6 +6,7 @@
             [expound.util :as util]
             [expound.ansi :as ansi]
             [expound.paths :as paths]
+            [expound.registry :as reg]
             [clojure.walk :as walk]
             #?(:cljs [goog.string.format]) ; https://github.com/bhb/expound/issues/183
             #?(:cljs [goog.string])        ; https://github.com/bhb/expound/issues/183
@@ -244,16 +245,19 @@
     (pprint-fn x)
     (pprint/write x :stream nil)))
 
-(defn expand-spec [spec]
+(defn expand-spec
+  [spec]
   (let [expanded-spec (if (s/get-spec spec)
                         (s/form spec)
-                        spec)]
+                        spec)
+        expanded-spec ]
     (if (string? expanded-spec)
       expanded-spec
       (pprint-str expanded-spec))))
 
 (defn simple-spec-or-name [spec-name]
-  (let [expanded (expand-spec spec-name)
+  (let [expanded (or (reg/find-registry-name spec-name)
+                     (expand-spec spec-name))
         spec-str (elide-spec-ns (elide-core-ns
                                  (if (nil? expanded)
                                    "nil"

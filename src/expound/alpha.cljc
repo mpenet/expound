@@ -6,11 +6,8 @@
             [clojure.set :as set]
             [expound.printer :as printer]
             [expound.util :as util]
-            [expound.ansi :as ansi]))
-
-;;;;;; registry ;;;;;;
-
-(defonce ^:private registry-ref (atom {}))
+            [expound.ansi :as ansi]
+            [expound.registry :as reg]))
 
 ;;;;;; internal specs ;;;;;;
 
@@ -1022,7 +1019,7 @@ returned an invalid value.
 (defn error-message
   "Given a spec named `k`, return its human-readable error message."
   [k]
-  (get @registry-ref k))
+  (util/visit-spec-parents k reg/error-message))
 
 (s/fdef custom-printer
   :args (s/cat :opts :expound.printer/opts)
@@ -1078,8 +1075,31 @@ returned an invalid value.
 (defn defmsg
   "Associates the spec named `k` with `error-message`."
   [k error-message]
-  (swap! registry-ref assoc k error-message)
+  (reg/assoc-error-message k error-message)
   nil)
+
+(s/fdef defspec-name
+  :args (s/cat :k qualified-ident?
+               :name string?)
+  :ret nil?)
+(defn defspec-name
+  "Associates the spec identified via `spec` with `name`."
+  [spec display-name]
+  (reg/assoc-spec-name spec display-name)
+  nil)
+
+;; (s/def ::foo (s/keys :req-un [::bar2 ::baz]))
+;; (s/def ::bar string?)
+;; (s/def ::baz string?)
+
+;; ;; (defmsg ::bar "Bar must be a string")
+;; ;; (defspec-name ::bar nil)
+;; (defmsg `clojure.core/string? "should be a String")
+
+;; (s/def ::bar2 ::bar)
+;; (defspec-name ::bar "A Bar")
+;; (defmsg ::bar "should be a Bar")
+;; (expound ::foo {})
 
 #?(:clj
    (defmacro def

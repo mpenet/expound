@@ -1088,19 +1088,6 @@ returned an invalid value.
   (reg/assoc-spec-name spec display-name)
   nil)
 
-;; (s/def ::foo (s/keys :req-un [::bar2 ::baz]))
-;; (s/def ::bar string?)
-;; (s/def ::baz string?)
-
-;; ;; (defmsg ::bar "Bar must be a string")
-;; ;; (defspec-name ::bar nil)
-;; (defmsg `clojure.core/string? "should be a String")
-
-;; (s/def ::bar2 ::bar)
-;; (defspec-name ::bar "A Bar")
-;; (defmsg ::bar "should be a Bar")
-;; (expound ::foo {})
-
 #?(:clj
    (defmacro def
      "DEPRECATED: Prefer `defmsg`

@@ -249,8 +249,7 @@
   [spec]
   (let [expanded-spec (if (s/get-spec spec)
                         (s/form spec)
-                        spec)
-        expanded-spec ]
+                        spec)]
     (if (string? expanded-spec)
       expanded-spec
       (pprint-str expanded-spec))))
